@@ -185,6 +185,7 @@ const {
   historical,
   regions,
   search,
+  visualizationMode,
 } = useControlPanelStore();
 
 const [allServers, setAllServers] = useState(
@@ -249,7 +250,7 @@ const exchangeServers = allServers.filter(server => {
             <ServerMarker key={index} server={server} />
           ))}
 
-         {connections.map(([fromName, toName], index) => {
+         {visualizationMode === "topology" &&connections.map(([fromName, toName], index) => {
   const from = exchangeServers.find(e => e.name === fromName);
   const to = exchangeServers.find(e => e.name === toName);
   if (!from || !to) return null;

@@ -23,6 +23,7 @@ export default function ControlPanelDrawer() {
   historical, setHistorical,
   regions, setRegions,
   search, setSearch,
+  visualizationMode, setVisualizationMode,
   resetFilters
 } = useControlPanelStore()
 
@@ -90,20 +91,33 @@ export default function ControlPanelDrawer() {
             />
 
             <MetricsDashboard />
-             <button
-              onClick={resetFilters}
-              style={{
-                marginTop: 20,
-                padding: "10px 16px",
-                backgroundColor: "#eee",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                cursor: "pointer"
-              }}
-            >
-              Reset to Default
-            </button>
-            
+             <div className="control-panel-buttons">
+  <button onClick={resetFilters} className="reset-button">
+    Reset to Default
+  </button>
+
+  <div className="visualization-mode">
+    <label className="visualization-label">Visualization Mode</label>
+    <div className="mode-buttons">
+      <button
+        onClick={() => setVisualizationMode("heatmap")}
+        className={`mode-button ${
+          visualizationMode === "heatmap" ? "selected" : ""
+        }`}
+      >
+        🔥 Heatmap
+      </button>
+      <button
+        onClick={() => setVisualizationMode("topology")}
+        className={`mode-button ${
+          visualizationMode === "topology" ? "selected" : ""
+        }`}
+      >
+        🌐 Topology
+      </button>
+</div>
+  </div>
+</div>
           </DialogContent>
                 
         </>

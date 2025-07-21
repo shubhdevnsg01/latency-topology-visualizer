@@ -9,6 +9,7 @@ type ControlPanelState = {
   historical: boolean;
   regions: boolean;
   search: string;
+  visualizationMode: string;
   setExchangeFilter: (val: string) => void;
   setCloudProviderFilter: (val: string) => void;
   setLatencyRange: (val: [number, number]) => void;
@@ -16,6 +17,7 @@ type ControlPanelState = {
   setHistorical: (val: boolean) => void;
   setRegions: (val: boolean) => void;
   setSearch: (val: string) => void;
+  setVisualizationMode: (mode: string) => void;
   setRegionFilter: (filter: string) => void;
   resetFilters: () => void;
 };
@@ -29,6 +31,7 @@ export const useControlPanelStore = create<ControlPanelState>((set) => ({
   historical: true,
   regions: true,
   search: "",
+  visualizationMode: "heatmap",
 
   setExchangeFilter: (val) => set({ exchangeFilter: val }),
   setCloudProviderFilter: (val) => set({ cloudProviderFilter: val }),
@@ -38,16 +41,18 @@ export const useControlPanelStore = create<ControlPanelState>((set) => ({
   setHistorical: (val) => set({ historical: val }),
   setRegions: (val) => set({ regions: val }),
   setSearch: (val) => set({ search: val }),
+  setVisualizationMode: (mode) => set({ visualizationMode: mode }),
 
   resetFilters: () =>
     set({
       exchangeFilter: "",
       cloudProviderFilter: "",
-      regionFilter: "", 
+      regionFilter: "",
       latencyRange: [0, 1000],
       realTime: true,
       historical: true,
       regions: true,
       search: "",
+      visualizationMode: "heatmap",
     }),
 }));
