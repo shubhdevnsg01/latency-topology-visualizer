@@ -3,9 +3,10 @@
 import { useLatencyStore } from "../store/latencyStore";
 import { LatencyChart } from "../components/LatencyChart";
 import { TimeRangeSelector } from "../components/TimeRangeSelector";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { SERVER_PAIRS } from "../data/serverPairs";
 import { useControlPanelStore } from "@/store/controlPanelStore";
+import { EXCHANGE_META } from "@/data/exchangeMeta";
 
 export default function TrendsPage() {
   const { data, selectedRange } = useLatencyStore();
@@ -14,6 +15,7 @@ export default function TrendsPage() {
     cloudProviderFilter,
     latencyRange,
     search,
+    regionFilter,
   } = useControlPanelStore();
 
   const filteredData = useMemo(() => {
@@ -28,32 +30,41 @@ export default function TrendsPage() {
     const result: typeof data = {};
 
     for (const pair of SERVER_PAIRS) {
-      const [from, to] = pair.split("-");
+      const [exchangeA, exchangeB] = pair.split("-");
 
-      const matchesExchange = exchangeFilter
-        ? from.toLowerCase().includes(exchangeFilter.toLowerCase()) ||
-          to.toLowerCase().includes(exchangeFilter.toLowerCase())
-        : true;
+     const metaA = EXCHANGE_META[exchangeA as keyof typeof EXCHANGE_META];
+     const metaB = EXCHANGE_META[exchangeB as keyof typeof EXCHANGE_META];
 
-      const matchesCloud = cloudProviderFilter
-        ? from.toLowerCase().includes(cloudProviderFilter.toLowerCase()) ||
-          to.toLowerCase().includes(cloudProviderFilter.toLowerCase())
-        : true;
+      if (!metaA || !metaB) continue;
 
-      const matchesSearch = search
-        ? from.toLowerCase().includes(search.toLowerCase()) ||
-          to.toLowerCase().includes(search.toLowerCase())
-        : true;
+      const matchesExchange =
+        exchangeFilter === "" ||
+        exchangeA.toLowerCase().includes(exchangeFilter.toLowerCase()) ||
+        exchangeB.toLowerCase().includes(exchangeFilter.toLowerCase());
 
-      if (!(matchesExchange && matchesCloud && matchesSearch)) continue;
+      const matchesCloud =
+        cloudProviderFilter === "" ||
+        metaA.cloud.toLowerCase().includes(cloudProviderFilter.toLowerCase()) ||
+        metaB.cloud.toLowerCase().includes(cloudProviderFilter.toLowerCase());
 
-      const points = (data[pair] || []).filter((point) => {
-        return (
+      const matchesRegion =
+        regionFilter === "" ||
+        metaA.location.toLowerCase().includes(regionFilter.toLowerCase()) ||
+        metaB.location.toLowerCase().includes(regionFilter.toLowerCase());
+
+      const matchesSearch =
+        search === "" ||
+        exchangeA.toLowerCase().includes(search.toLowerCase()) ||
+        exchangeB.toLowerCase().includes(search.toLowerCase());
+
+      if (!(matchesExchange && matchesCloud && matchesRegion && matchesSearch)) continue;
+
+      const points = (data[pair] || []).filter(
+        (point) =>
           point.timestamp >= cutoff &&
           point.latency >= latencyRange[0] &&
           point.latency <= latencyRange[1]
-        );
-      });
+      );
 
       if (points.length > 0) {
         result[pair] = points;
@@ -61,21 +72,46 @@ export default function TrendsPage() {
     }
 
     return result;
-  }, [data, selectedRange, exchangeFilter, cloudProviderFilter, latencyRange, search]);
+  }, [
+    data,
+    selectedRange,
+    exchangeFilter,
+    cloudProviderFilter,
+    regionFilter,
+    latencyRange,
+    search,
+  ]);
 
   const hasData = Object.keys(filteredData).length > 0;
 
   return (
-    <div style={{ padding: '1rem', backgroundColor: 'white' }}>
+    <div style={{ padding: "1rem", backgroundColor: "black" }}>
       <TimeRangeSelector />
 
-      <div style={{ marginTop: '1rem' }}>
+      <div style={{ marginTop: "1rem" }}>
         {hasData ? (
-          Object.entries(filteredData).map(([pair, points]) => (
-            <LatencyChart key={pair} pair={pair} points={points} />
-          ))
+          Object.entries(filteredData).map(([pair, points]) => {
+            const [exchangeA, exchangeB] = pair.split("-");
+            const metaA = EXCHANGE_META[exchangeA as keyof typeof EXCHANGE_META];
+            const metaB = EXCHANGE_META[exchangeB as keyof typeof EXCHANGE_META];
+            return (
+              <div key={pair} style={{ marginBottom: "2rem" }}>
+               <h3 className="latency-heading">
+  {exchangeA} ({metaA.cloud}, {metaA.location}) → {exchangeB} (
+  {metaB.cloud}, {metaB.location})
+</h3>
+                <LatencyChart pair={pair} points={points} />
+              </div>
+            );
+          })
         ) : (
-          <p style={{ textAlign: 'center', color: '#6B7280', marginTop: '2.5rem' }}>
+          <p
+            style={{
+              textAlign: "center",
+              color: "#6B7280",
+              marginTop: "2.5rem",
+            }}
+          >
             No latency data available in the selected range or filters.
           </p>
         )}
@@ -83,4 +119,3 @@ export default function TrendsPage() {
     </div>
   );
 }
-

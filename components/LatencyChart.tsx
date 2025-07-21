@@ -34,7 +34,7 @@ export function LatencyChart({ pair, points }: Props) {
 
   return (
     <div className="bg-white rounded-lg shadow p-4">
-      <h2 className="text-lg font-semibold mb-1 text-gray-800">{pair}</h2>
+      {/* <h2 className="text-lg font-semibold mb-1 text-gray-800">{pair}</h2> */}
       <p className="text-sm text-gray-600 mb-2">
         Min: {stats.min.toFixed(1)}ms | Max: {stats.max.toFixed(1)}ms | Avg: {stats.avg.toFixed(1)}ms
       </p>
