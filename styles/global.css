@@ -10,3 +10,94 @@ body.trends-page {
   overflow: auto;
   background-color: white;
 }
+
+.control-panel-drawer {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 50; /* Ensure it's on top */
+}
+
+button {
+  cursor: pointer;
+}
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+}
+
+.dialog-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 320px;
+  background: white;
+  padding: 24px;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  animation: slideIn 0.3s ease-out;
+  z-index: 50;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.dialog-button {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-weight: bold;
+  z-index: 60;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.switch {
+  width: 44px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 999px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.switch-thumb {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all 0.2s;
+}
+
+.switch[data-checked="true"] {
+  background-color: green;
+}
+
+.switch[data-checked="true"] .switch-thumb {
+  transform: translateX(20px);
+}
