@@ -4,3 +4,9 @@ body {
   overflow: hidden;
   background-color: black;
 }
+
+/* ✅ Override styles only when trends page is rendered */
+body.trends-page {
+  overflow: auto;
+  background-color: white;
+}
