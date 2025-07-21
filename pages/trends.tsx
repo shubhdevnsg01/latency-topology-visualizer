@@ -7,7 +7,6 @@ import { useMemo } from "react";
 import { SERVER_PAIRS } from "../data/serverPairs";
 import { useControlPanelStore } from "@/store/controlPanelStore";
 import { EXCHANGE_META } from "@/data/exchangeMeta";
-
 export default function TrendsPage() {
   const { data, selectedRange } = useLatencyStore();
   const {

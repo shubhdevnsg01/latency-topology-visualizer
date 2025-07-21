@@ -190,7 +190,7 @@ const {
 const [allServers, setAllServers] = useState(
   initialExchanges.map(server => ({
     ...server,
-    latency: Math.floor(Math.random() * 300)
+    latency: Math.floor(Math.random() * 5000)
   }))
 );
 

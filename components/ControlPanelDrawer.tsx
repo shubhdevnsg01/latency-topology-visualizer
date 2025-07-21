@@ -11,6 +11,7 @@ import { useState } from "react"
 import { Switch } from "./ui/switch"
 import { Input } from "./ui/input"
 import { useControlPanelStore } from "@/store/controlPanelStore"
+import MetricsDashboard from "./MetricsDashboard"
 
 export default function ControlPanelDrawer() {
   const [open, setOpen] = useState(false)
@@ -88,11 +89,7 @@ export default function ControlPanelDrawer() {
               placeholder="Exchange or Region"
             />
 
-            <div style={{ marginTop: 20 }}>
-              <strong>📊 Metrics Dashboard</strong>
-              <p>Avg Latency: 78ms</p>
-              <p>System Status: ✅ Healthy</p>
-            </div>
+            <MetricsDashboard />
              <button
               onClick={resetFilters}
               style={{
