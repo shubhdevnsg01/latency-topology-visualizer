@@ -4,12 +4,16 @@ body {
   background-color: black;
 }
 
-/* ✅ Override styles only when trends page is rendered */
-/* body.trends-page {
-  overflow: auto;
-  background-color: white;
-} */
+.time-range-selector-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
 
+.time-range-selector-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
 .control-panel-drawer {
   position: fixed;
   top: 1rem;
