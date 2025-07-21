@@ -87,7 +87,7 @@ export default function ControlPanelDrawer() {
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Exchange or Region"
+              placeholder="Search by location"
             />
 
             <MetricsDashboard />

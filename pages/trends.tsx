@@ -53,8 +53,8 @@ export default function TrendsPage() {
 
       const matchesSearch =
         search === "" ||
-        exchangeA.toLowerCase().includes(search.toLowerCase()) ||
-        exchangeB.toLowerCase().includes(search.toLowerCase());
+        metaA.location.toLowerCase().includes(search.toLowerCase()) ||
+        metaB.location.toLowerCase().includes(search.toLowerCase());
 
       if (!(matchesExchange && matchesCloud && matchesRegion && matchesSearch)) continue;
 
