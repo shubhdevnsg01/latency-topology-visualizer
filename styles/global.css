@@ -1,15 +1,14 @@
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: black;
 }
 
 /* ✅ Override styles only when trends page is rendered */
-body.trends-page {
+/* body.trends-page {
   overflow: auto;
   background-color: white;
-}
+} */
 
 .control-panel-drawer {
   position: fixed;

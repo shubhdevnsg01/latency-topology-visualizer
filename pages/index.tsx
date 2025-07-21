@@ -6,12 +6,21 @@ const ControlPanelDrawer = dynamic(
 const WorldMap = dynamic(() => import('../components/WorldMap'), {
   ssr: false,
 });
-
+const Trends = dynamic(() => import('../pages/trends'), {
+  ssr: false,
+});
 export default function Home() {
   return (
-    <main className="relative h-screen">
-      <WorldMap />
-      <ControlPanelDrawer /> 
+    <main className="main-layout">
+      <div className="worldmap-container">
+        <WorldMap />
+      </div>
+
+      <ControlPanelDrawer />
+
+      <div className="trends-panel">
+        <Trends/>
+      </div>
     </main>
   );
 }

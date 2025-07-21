@@ -10,16 +10,20 @@ import {
 import { useState } from "react"
 import { Switch } from "./ui/switch"
 import { Input } from "./ui/input"
+import { useControlPanelStore } from "@/store/controlPanelStore"
 
 export default function ControlPanelDrawer() {
   const [open, setOpen] = useState(false)
-  const [exchangeFilter, setExchangeFilter] = useState("")
-  const [cloudProviderFilter, setCloudProviderFilter] = useState("")
-  const [latencyRange, setLatencyRange] = useState<[number, number]>([0, 300])
-  const [realTime, setRealTime] = useState(true)
-  const [historical, setHistorical] = useState(true)
-  const [regions, setRegions] = useState(true)
-  const [search, setSearch] = useState("")
+  const {
+  exchangeFilter, setExchangeFilter,
+  cloudProviderFilter, setCloudProviderFilter,
+  latencyRange, setLatencyRange,
+  realTime, setRealTime,
+  historical, setHistorical,
+  regions, setRegions,
+  search, setSearch,
+  resetFilters
+} = useControlPanelStore()
 
   return (
     <Dialog>
@@ -89,8 +93,24 @@ export default function ControlPanelDrawer() {
               <p>Avg Latency: 78ms</p>
               <p>System Status: ✅ Healthy</p>
             </div>
+             <button
+              onClick={resetFilters}
+              style={{
+                marginTop: 20,
+                padding: "10px 16px",
+                backgroundColor: "#eee",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                cursor: "pointer"
+              }}
+            >
+              Reset to Default
+            </button>
+            
           </DialogContent>
+                
         </>
+        
       )}
     </Dialog>
   )

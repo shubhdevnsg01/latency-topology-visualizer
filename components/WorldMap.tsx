@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import { latLonToVector3 } from '../utils/geoUtils';
 import { CatmullRomCurve3, Vector3 } from 'three';
 import { useLatencyStore } from '../store/latencyStore';
+import { useControlPanelStore } from '@/store/controlPanelStore';
 
 // Initial exchange data (latency will be added via state)
 const initialExchanges = [
@@ -176,39 +177,60 @@ const Earth = () => {
 };
 
 const WorldMap = () => {
-  const [exchangeServers, setExchangeServers] = useState(
-    initialExchanges.map(server => ({ ...server, latency: Math.floor(Math.random() * 300) }))
-  );
+const {
+  exchangeFilter,
+  cloudProviderFilter,
+  latencyRange,
+  realTime,
+  historical,
+  regions,
+  search,
+} = useControlPanelStore();
+
+const [allServers, setAllServers] = useState(
+  initialExchanges.map(server => ({
+    ...server,
+    latency: Math.floor(Math.random() * 300)
+  }))
+);
+
+// Apply filters
+const exchangeServers = allServers.filter(server => {
+  const matchesExchange = exchangeFilter ? server.name.toLowerCase().includes(exchangeFilter.toLowerCase()) : true;
+  const matchesCloud = cloudProviderFilter ? server.cloud.toLowerCase().includes(cloudProviderFilter.toLowerCase()) : true;
+  const matchesLatency = server.latency >= latencyRange[0] && server.latency <= latencyRange[1];
+  const matchesSearch = search
+    ? server.name.toLowerCase().includes(search.toLowerCase()) ||
+      server.location.toLowerCase().includes(search.toLowerCase())
+    : true;
+  return matchesExchange && matchesCloud && matchesLatency && matchesSearch;
+});
 
   // Simulate real-time latency every 5 seconds
   useEffect(() => {
-  console.log("WorldMap mounted")
-    const interval = setInterval(() => {
-    console.log("Pushing data to Zustand store...");
-      setExchangeServers(prev => {
-      const updated = prev.map(server => ({
-        ...server,
-        latency: Math.floor(Math.random() * 300),
-      }));
+  const interval = setInterval(() => {
+    const updated = allServers.map(server => ({
+      ...server,
+      latency: Math.floor(Math.random() * 300),
+    }));
 
-      // Push connection pair data to Zustand
-      connections.forEach(([fromName, toName]) => {
-        const from = updated.find(e => e.name === fromName);
-        const to = updated.find(e => e.name === toName);
+    // Push connection pair data to Zustand
+    connections.forEach(([fromName, toName]) => {
+      const from = updated.find(e => e.name === fromName);
+      const to = updated.find(e => e.name === toName);
 
-        if (from && to) {
-          const pairKey = `${from.name}-${to.name}`;
-          const avgLatency = Math.round((from.latency + to.latency) / 2);
+      if (from && to) {
+        const pairKey = `${from.name}-${to.name}`;
+        const avgLatency = Math.round((from.latency + to.latency) / 2);
 
-          useLatencyStore.getState().addLatencyData(pairKey, {
-            timestamp: Date.now(),
-            latency: avgLatency,
-          });
-        }
-      });
-
-      return updated;
+        useLatencyStore.getState().addLatencyData(pairKey, {
+          timestamp: Date.now(),
+          latency: avgLatency,
+        });
+      }
     });
+
+    setAllServers(updated);
   }, 5000);
 
   return () => clearInterval(interval);
