@@ -110,3 +110,30 @@ button {
   color: white;           
   margin-bottom: 0.5rem;
 }
+
+.csv-button {
+  font-size: 1rem;       /* ~text-xs */
+  color: purple;           /* ~text-indigo-600 */
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.csv-button:hover {
+  color: green;           
+}
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.pair-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937; /* text-gray-800 */
+  margin: 0;
+}

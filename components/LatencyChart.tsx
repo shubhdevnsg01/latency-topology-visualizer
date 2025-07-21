@@ -1,4 +1,3 @@
-// components/LatencyChart.tsx
 "use client";
 import {
   LineChart,
@@ -32,12 +31,41 @@ export function LatencyChart({ pair, points }: Props) {
       (points.length || 1),
   };
 
+  const downloadCSV = () => {
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      ["Timestamp,Latency"]
+        .concat(
+          points.map(
+            (p) =>
+              `${new Date(p.timestamp).toISOString()},${p.latency}`
+          )
+        )
+        .join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.href = encodedUri;
+    link.download = `${pair.replace(/[^a-zA-Z0-9]/g, "_")}_latency.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow p-4">
-      {/* <h2 className="text-lg font-semibold mb-1 text-gray-800">{pair}</h2> */}
-      <p className="text-sm text-gray-600 mb-2">
-        Min: {stats.min.toFixed(1)}ms | Max: {stats.max.toFixed(1)}ms | Avg: {stats.avg.toFixed(1)}ms
-      </p>
+     <div className="chart-header">
+  <p className="text-sm text-gray-600 mb-2">
+  Min: {stats.min.toFixed(1)}ms | Max: {stats.max.toFixed(1)}ms | Avg: {stats.avg.toFixed(1)}ms
+</p>
+  <button onClick={downloadCSV} className="csv-button">
+    📥 Download CSV
+  </button>
+</div>
+
+
+
+
       <ResponsiveContainer width="100%" height={250}>
         <LineChart data={points}>
           <CartesianGrid stroke="#ccc" />
