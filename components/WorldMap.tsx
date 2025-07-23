@@ -8,7 +8,8 @@ import { latLonToVector3 } from '../utils/geoUtils';
 import { CatmullRomCurve3, Vector3 } from 'three';
 import { useLatencyStore } from '../store/latencyStore';
 import { useControlPanelStore } from '@/store/controlPanelStore';
-
+import { useLoader } from '@react-three/fiber'
+import { TextureLoader } from 'three'
 // Initial exchange data (latency will be added via state)
 const initialExchanges = [
   { name: 'Binance', location: 'Tokyo', lat: 35.6895, lon: 139.6917, cloud: 'AWS' },
@@ -81,9 +82,9 @@ const connections = [
 const getColorByCloud = (cloud: string): string => {
   switch (cloud) {
     case 'AWS': return 'orange';
-    case 'GCP': return 'blue';
+    case 'GCP': return 'purple';
     case 'Azure': return 'pink';
-    default: return 'gray';
+    default: return 'indigo';
   }
 };
 
@@ -166,14 +167,18 @@ const ServerMarker = ({ server }: { server: any }) => {
 };
 
 const Earth = () => {
+   const texture = useLoader(TextureLoader, '/textures/earth.jpg') // Just use the relative path
+
   return (
     <mesh>
-      <sphereGeometry args={[2, 64, 64]} />
+      <sphereGeometry args={[2, 64, 64]} /> {/* Restore your original radius */}
       <meshStandardMaterial
-        map={new THREE.TextureLoader().load('/textures/earth.jpg')}
+        map={texture}
+        color={new THREE.Color('#3366ff')} // Add blue tint
+        toneMapped={false}
       />
     </mesh>
-  );
+  )
 };
 
 const WorldMap = () => {
@@ -240,8 +245,9 @@ const exchangeServers = allServers.filter(server => {
   return (
     <div style={{ height: '100vh', width: '100%' }}>
       <Canvas camera={{ position: [0, 0, 5] }}>
-        <ambientLight intensity={0.3} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
+     <ambientLight intensity={0.6} color={0xffffff} />
+  <directionalLight position={[5, 3, 5]} intensity={1.5} color={0xffffff} />
+        
         <Suspense fallback={null}>
           <Earth />
           <Stars radius={100} depth={50} count={5000} factor={4} fade />
@@ -264,7 +270,14 @@ const exchangeServers = allServers.filter(server => {
   );
 })}
 
-          <OrbitControls autoRotate autoRotateSpeed={0.5} enablePan enableZoom />
+          <OrbitControls
+  autoRotate
+  autoRotateSpeed={0.5}
+  enablePan={false}
+  enableZoom={true}
+  minDistance={2.5}  
+  maxDistance={8}
+/>
         </Suspense>
       </Canvas>
     </div>
