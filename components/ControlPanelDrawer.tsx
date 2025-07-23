@@ -13,23 +13,51 @@ import { Input } from "./ui/input"
 import { useControlPanelStore } from "@/store/controlPanelStore"
 import MetricsDashboard from "./MetricsDashboard"
 import { useLatencyStore } from "@/store/latencyStore"
+import { EXCHANGE_META } from "@/data/exchangeMeta"
 
 export default function ControlPanelDrawer() {
   const [open, setOpen] = useState(false)
+
   const {
-  exchangeFilter, setExchangeFilter,
-  cloudProviderFilter, setCloudProviderFilter,
-  latencyRange, setLatencyRange,
-  realTime, setRealTime,
-  regions, setRegions,
-  search, setSearch,
-  visualizationMode, setVisualizationMode,
-  resetFilters
-} = useControlPanelStore()
-const {setSelectedRange}=useLatencyStore();
+    exchangeFilter,
+    setExchangeFilter,
+    cloudProviderFilter,
+    setCloudProviderFilter,
+    latencyRange,
+    setLatencyRange,
+    realTime,
+    setRealTime,
+    regions,
+    setRegions,
+    search,
+    setSearch,
+    visualizationMode,
+    setVisualizationMode,
+    resetFilters
+  } = useControlPanelStore()
+
+  const { setSelectedRange } = useLatencyStore()
+
+  const exchangeOptions = Object.keys(EXCHANGE_META)
+  const cloudOptions = [...new Set(Object.values(EXCHANGE_META).map(meta => meta.cloud))]
+  const locationOptions = [...new Set(Object.values(EXCHANGE_META).map(meta => meta.location))]
+
+  const handleExchangeChange = (selected: string) => {
+    setExchangeFilter(selected)
+
+    if (selected && selected in EXCHANGE_META) {
+      const meta = EXCHANGE_META[selected as keyof typeof EXCHANGE_META]
+      setCloudProviderFilter(meta.cloud)
+      setSearch(meta.location)
+    } else {
+      setCloudProviderFilter("")
+      setSearch("")
+    }
+  }
+
   return (
     <Dialog>
-      {!open&&<DialogTrigger onOpen={() => setOpen(true)} />}
+      {!open && <DialogTrigger onOpen={() => setOpen(true)} />}
       {open && (
         <>
           <DialogOverlay onClose={() => setOpen(false)} />
@@ -37,18 +65,32 @@ const {setSelectedRange}=useLatencyStore();
             <DialogTitle>Control Panel</DialogTitle>
 
             <label>Exchange</label>
-            <Input
+            <select
               value={exchangeFilter}
-              onChange={(e) => setExchangeFilter(e.target.value)}
-              placeholder="e.g. Binance"
-            />
+              onChange={(e) => handleExchangeChange(e.target.value)}
+              className="dropdown"
+            >
+              <option value="">All Exchanges</option>
+              {exchangeOptions.map((ex) => (
+                <option key={ex} value={ex}>
+                  {ex}
+                </option>
+              ))}
+            </select>
 
             <label>Cloud</label>
-            <Input
+            <select
               value={cloudProviderFilter}
               onChange={(e) => setCloudProviderFilter(e.target.value)}
-              placeholder="e.g. AWS"
-            />
+              className="dropdown"
+            >
+              <option value="">All Providers</option>
+              {cloudOptions.map((cloud) => (
+                <option key={cloud} value={cloud}>
+                  {cloud}
+                </option>
+              ))}
+            </select>
 
             <label>Latency Range</label>
             <div style={{ display: "flex", gap: "8px" }}>
@@ -70,13 +112,14 @@ const {setSelectedRange}=useLatencyStore();
 
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10 }}>
               <span>Show Real-time</span>
-              <Switch checked={realTime}
-  onCheckedChange={(checked) => {
-    setRealTime(checked);
-    if (checked) setSelectedRange(null); // clear time range
-  }} />
+              <Switch
+                checked={realTime}
+                onCheckedChange={(checked) => {
+                  setRealTime(checked)
+                  if (checked) setSelectedRange(null)
+                }}
+              />
             </div>
-
 
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10 }}>
               <span>Show Regions</span>
@@ -84,44 +127,46 @@ const {setSelectedRange}=useLatencyStore();
             </div>
 
             <label style={{ marginTop: "12px" }}>Location</label>
-            <Input
+            <select
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by location"
-            />
-        
-            <MetricsDashboard />
-             <div className="control-panel-buttons">
-  <button onClick={resetFilters} className="reset-button">
-    Reset to Default
-  </button>
+              className="dropdown"
+            >
+              <option value="">All Locations</option>
+              {locationOptions.map((loc) => (
+                <option key={loc} value={loc}>
+                  {loc}
+                </option>
+              ))}
+            </select>
 
-  <div className="visualization-mode">
-    <label className="visualization-label">Visualization Mode</label>
-    <div className="mode-buttons">
-      <button
-        onClick={() => setVisualizationMode("heatmap")}
-        className={`mode-button ${
-          visualizationMode === "heatmap" ? "selected" : ""
-        }`}
-      >
-        🔥 Heatmap
-      </button>
-      <button
-        onClick={() => setVisualizationMode("topology")}
-        className={`mode-button ${
-          visualizationMode === "topology" ? "selected" : ""
-        }`}
-      >
-        🌐 Topology
-      </button>
-</div>
-  </div>
-</div>
+            <MetricsDashboard />
+
+            <div className="control-panel-buttons">
+              <button onClick={resetFilters} className="reset-button">
+                Reset to Default
+              </button>
+
+              <div className="visualization-mode">
+                <label className="visualization-label">Visualization Mode</label>
+                <div className="mode-buttons">
+                  <button
+                    onClick={() => setVisualizationMode("heatmap")}
+                    className={`mode-button ${visualizationMode === "heatmap" ? "selected" : ""}`}
+                  >
+                    🔥 Heatmap
+                  </button>
+                  <button
+                    onClick={() => setVisualizationMode("topology")}
+                    className={`mode-button ${visualizationMode === "topology" ? "selected" : ""}`}
+                  >
+                    🌐 Topology
+                  </button>
+                </div>
+              </div>
+            </div>
           </DialogContent>
-                
         </>
-        
       )}
     </Dialog>
   )

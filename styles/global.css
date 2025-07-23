@@ -312,3 +312,19 @@ button {
   font-weight: bold;
   font-size: 0.95rem;
 }
+.dropdown {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #111;
+}
+
+.dropdown:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
