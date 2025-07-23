@@ -201,32 +201,7 @@ const [allServers, setAllServers] = useState(
     latency: Math.floor(Math.random() * 5000)
   }))
 );
-const isMobile = useMediaQuery({ maxWidth: 768 });
-  const orbitControlsRef = useRef<any>(null);
 
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const disableControls = () => {
-      if (orbitControlsRef.current) {
-        orbitControlsRef.current.enabled = false;
-      }
-    };
-
-    const enableControls = () => {
-      if (orbitControlsRef.current) {
-        orbitControlsRef.current.enabled = true;
-      }
-    };
-
-    window.addEventListener('touchstart', disableControls, { passive: true });
-    window.addEventListener('touchend', enableControls, { passive: true });
-
-    return () => {
-      window.removeEventListener('touchstart', disableControls);
-      window.removeEventListener('touchend', enableControls);
-    };
-  }, [isMobile]);
 // Apply filters
 const exchangeServers = allServers.filter(server => {
   const matchesExchange = exchangeFilter ? server.name.toLowerCase().includes(exchangeFilter.toLowerCase()) : true;
@@ -299,7 +274,7 @@ const exchangeServers = allServers.filter(server => {
 })}
 
           <OrbitControls
-  ref={orbitControlsRef}        
+  autoRotate      
   autoRotateSpeed={0.5}
   enablePan={false}
   enableZoom={true}
