@@ -55,7 +55,7 @@ export function LatencyChart({ pair, points }: Props) {
   return (
     <div className="bg-white rounded-lg shadow p-4">
      <div className="chart-header">
-  <p className="text-sm text-gray-600 mb-2">
+  <p className="latency-stats">
   Min: {stats.min.toFixed(1)}ms | Max: {stats.max.toFixed(1)}ms | Avg: {stats.avg.toFixed(1)}ms
 </p>
   <button onClick={downloadCSV} className="csv-button">

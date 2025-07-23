@@ -12,6 +12,7 @@ import { Switch } from "./ui/switch"
 import { Input } from "./ui/input"
 import { useControlPanelStore } from "@/store/controlPanelStore"
 import MetricsDashboard from "./MetricsDashboard"
+import { useLatencyStore } from "@/store/latencyStore"
 
 export default function ControlPanelDrawer() {
   const [open, setOpen] = useState(false)
@@ -20,16 +21,15 @@ export default function ControlPanelDrawer() {
   cloudProviderFilter, setCloudProviderFilter,
   latencyRange, setLatencyRange,
   realTime, setRealTime,
-  historical, setHistorical,
   regions, setRegions,
   search, setSearch,
   visualizationMode, setVisualizationMode,
   resetFilters
 } = useControlPanelStore()
-
+const {setSelectedRange}=useLatencyStore();
   return (
     <Dialog>
-      <DialogTrigger onOpen={() => setOpen(true)} />
+      {!open&&<DialogTrigger onOpen={() => setOpen(true)} />}
       {open && (
         <>
           <DialogOverlay onClose={() => setOpen(false)} />
@@ -70,26 +70,26 @@ export default function ControlPanelDrawer() {
 
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10 }}>
               <span>Show Real-time</span>
-              <Switch checked={realTime} onCheckedChange={setRealTime} />
+              <Switch checked={realTime}
+  onCheckedChange={(checked) => {
+    setRealTime(checked);
+    if (checked) setSelectedRange(null); // clear time range
+  }} />
             </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10 }}>
-              <span>Show Historical</span>
-              <Switch checked={historical} onCheckedChange={setHistorical} />
-            </div>
 
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10 }}>
               <span>Show Regions</span>
               <Switch checked={regions} onCheckedChange={setRegions} />
             </div>
 
-            <label style={{ marginTop: "12px" }}>Search</label>
+            <label style={{ marginTop: "12px" }}>Location</label>
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by location"
             />
-
+        
             <MetricsDashboard />
              <div className="control-panel-buttons">
   <button onClick={resetFilters} className="reset-button">

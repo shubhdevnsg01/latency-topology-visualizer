@@ -1,10 +1,10 @@
 // /components/TimeRangeSelector.tsx
 import { useLatencyStore } from '../store/latencyStore'
-
+import { useControlPanelStore } from '@/store/controlPanelStore';
 export function TimeRangeSelector() {
   const { selectedRange, setSelectedRange } = useLatencyStore();
-
-  const ranges: typeof selectedRange[] = ['1h', '24h', '7d', '30d'];
+  const {setRealTime}=useControlPanelStore();
+ const ranges: typeof selectedRange[] = ['1h', '24h', '7d', '30d'];
 
    return (
     <div className="time-range-selector-wrapper">
@@ -12,10 +12,11 @@ export function TimeRangeSelector() {
         {ranges.map((r) => (
           <button
             key={r}
-            onClick={() => setSelectedRange(r)}
-            className={`px-3 py-1 rounded ${
-              selectedRange === r ? 'bg-blue-500 text-white' : 'bg-gray-200'
-            }`}
+            onClick={() => {
+              setSelectedRange(r);
+              setRealTime(false); 
+            }}
+            className='time-range-button'
           >
             {r}
           </button>

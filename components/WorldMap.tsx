@@ -182,7 +182,6 @@ const {
   cloudProviderFilter,
   latencyRange,
   realTime,
-  historical,
   regions,
   search,
   visualizationMode,
@@ -209,7 +208,8 @@ const exchangeServers = allServers.filter(server => {
 
   // Simulate real-time latency every 5 seconds
   useEffect(() => {
-  const interval = setInterval(() => {
+   
+    const interval = setInterval(() => {
     const updated = allServers.map(server => ({
       ...server,
       latency: Math.floor(Math.random() * 300),
@@ -246,7 +246,7 @@ const exchangeServers = allServers.filter(server => {
           <Earth />
           <Stars radius={100} depth={50} count={5000} factor={4} fade />
 
-          {exchangeServers.map((server, index) => (
+          {regions&&exchangeServers.map((server, index) => (
             <ServerMarker key={index} server={server} />
           ))}
 
