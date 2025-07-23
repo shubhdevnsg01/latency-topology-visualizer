@@ -10,6 +10,9 @@ import { useLatencyStore } from '../store/latencyStore';
 import { useControlPanelStore } from '@/store/controlPanelStore';
 import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three'
+import { useUiInteractionStore } from '@/store/useUiInteractionStore';
+import { useThree } from '@react-three/fiber';
+import { useMediaQuery } from 'react-responsive';
 // Initial exchange data (latency will be added via state)
 const initialExchanges = [
   { name: 'Binance', location: 'Tokyo', lat: 35.6895, lon: 139.6917, cloud: 'AWS' },
@@ -198,7 +201,32 @@ const [allServers, setAllServers] = useState(
     latency: Math.floor(Math.random() * 5000)
   }))
 );
+const isMobile = useMediaQuery({ maxWidth: 768 });
+  const orbitControlsRef = useRef<any>(null);
 
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const disableControls = () => {
+      if (orbitControlsRef.current) {
+        orbitControlsRef.current.enabled = false;
+      }
+    };
+
+    const enableControls = () => {
+      if (orbitControlsRef.current) {
+        orbitControlsRef.current.enabled = true;
+      }
+    };
+
+    window.addEventListener('touchstart', disableControls, { passive: true });
+    window.addEventListener('touchend', enableControls, { passive: true });
+
+    return () => {
+      window.removeEventListener('touchstart', disableControls);
+      window.removeEventListener('touchend', enableControls);
+    };
+  }, [isMobile]);
 // Apply filters
 const exchangeServers = allServers.filter(server => {
   const matchesExchange = exchangeFilter ? server.name.toLowerCase().includes(exchangeFilter.toLowerCase()) : true;
@@ -271,12 +299,13 @@ const exchangeServers = allServers.filter(server => {
 })}
 
           <OrbitControls
-  autoRotate
+  ref={orbitControlsRef}        
   autoRotateSpeed={0.5}
   enablePan={false}
   enableZoom={true}
   minDistance={2.5}  
   maxDistance={8}
+  
 />
         </Suspense>
       </Canvas>
