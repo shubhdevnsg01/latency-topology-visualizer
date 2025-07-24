@@ -16,8 +16,6 @@ export const SERVER_PAIRS = [
   'BitMart-Bitso',
   'Bitso-Coinsbit',
   'Coinsbit-ZebPay',
-  'ZebPay-Gate.io',
-  'Gate.io-WazirX',
   'WazirX-Bybit',
   'Bybit-Coincheck',
   'Coincheck-Bitget',
