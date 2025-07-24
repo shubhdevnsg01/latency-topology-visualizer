@@ -298,3 +298,260 @@ button {
     padding: 8px 12px;
   }
 }
+/* Add these styles to your existing global.css */
+
+/* Trends Container Base Styles */
+.trends-container {
+  background-color: black;
+  min-height: 200px;
+  position: relative;
+}
+
+.trends-content {
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.charts-container {
+  margin-top: 1rem;
+}
+
+.chart-item {
+  margin-bottom: 2rem;
+}
+
+.no-data-message {
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  margin-top: 2rem;
+  padding: 2rem;
+}
+
+.no-data-message p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .trends-container.mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+    max-height: 150px;
+    overflow: hidden;
+  }
+
+  .trends-container.mobile.expanded {
+    max-height: 85vh;
+    position: fixed;
+    top: 15vh;
+    bottom: 0;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .mobile-trends-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    border-bottom: 1px solid #374151;
+  }
+
+  .mobile-trends-header:active {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  }
+
+  .trends-title {
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .expand-icon {
+    font-size: 1.2rem;
+    color: #60a5fa;
+    transition: transform 0.2s ease;
+  }
+
+  .trends-container.mobile.expanded .expand-icon {
+    transform: rotate(180deg);
+  }
+
+  .scroll-lock-indicator {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(239, 68, 68, 0.8);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  .trends-content {
+    height: calc(100% - 65px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    padding: 0;
+  }
+
+  .trends-content.expanded {
+    padding: 1rem;
+  }
+
+  .trends-content:not(.expanded) {
+    display: none;
+  }
+
+  /* Custom scrollbar for mobile trends */
+  .trends-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .trends-content::-webkit-scrollbar-track {
+    background: rgba(55, 65, 81, 0.3);
+    border-radius: 4px;
+  }
+
+  .trends-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6366f1 0%, #8b5cf6 100%);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .trends-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #4f46e5 0%, #7c3aed 100%);
+  }
+
+  /* Scroll indicators */
+  .scroll-indicators {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 40;
+    pointer-events: none;
+  }
+
+  .scroll-hint {
+    background: rgba(0, 0, 0, 0.8);
+    color: #9ca3af;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    text-align: center;
+    animation: fadeInOut 3s ease-in-out infinite;
+  }
+
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  /* Chart adjustments for mobile */
+  .chart-item {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 1rem;
+  }
+
+  .chart-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .latency-heading {
+    font-size: 1.25rem !important;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    word-break: break-word;
+  }
+
+  /* Time range selector mobile adjustments */
+  .time-range-selector-wrapper {
+    margin: 0.5rem 0;
+    padding: 0 0.5rem;
+  }
+
+  .time-range-button {
+    min-width: 60px;
+    font-size: 0.875rem;
+  }
+
+  /* No data message mobile */
+  .no-data-message {
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .no-data-message p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Hide scroll indicators when not expanded */
+  .trends-container.mobile:not(.expanded) .scroll-indicators {
+    display: none;
+  }
+
+  /* Prevent main page scroll when trends is expanded */
+  body.trends-expanded {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .trends-container {
+    max-height: 70vh;
+  }
+
+  .trends-content {
+    max-height: 100%;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1025px) {
+  .trends-container.mobile {
+    position: relative !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .mobile-trends-header {
+    display: none;
+  }
+
+  .trends-content {
+    display: block !important;
+    height: auto !important;
+    padding: 1rem !important;
+  }
+}
