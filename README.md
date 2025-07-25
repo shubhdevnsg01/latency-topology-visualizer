@@ -35,13 +35,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## 📁 Folder Structure
 crypto-exchange-latency-monitor/
-├── README.md
-├── package.json
-├── tsconfig.json
-├── next.config.js
-├── tailwind.config.js
-├── .gitignore
-├── .eslintrc.json
+│
+├── Configuration Files
+│   ├── README.md
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── next.config.js
+│   ├── tailwind.config.js
+│   ├── .gitignore
+│   └── .eslintrc.json
 │
 ├── public/
 │   ├── textures/
@@ -54,41 +56,41 @@ crypto-exchange-latency-monitor/
 │
 ├── components/
 │   ├── ui/
-│   │   ├── dialog.tsx                    # Custom dialog components
-│   │   ├── input.tsx                     # Input component
-│   │   └── switch.tsx                    # Toggle switch component
+│   │   ├── dialog.tsx
+│   │   ├── input.tsx
+│   │   └── switch.tsx
 │   │
-│   ├── ControlPanelDrawer.tsx            # Main control panel with filters
-│   ├── LatencyChart.tsx                  # Recharts line chart component
-│   ├── MetricsDashboard.tsx              # System metrics display
-│   ├── MobileTrendsContainer.tsx         # Mobile-optimized trends view
-│   ├── TimeRangeSelector.tsx             # Time range selection buttons
-│   ├── Tooltip.tsx                       # Custom tooltip component
-│   └── WorldMap.tsx                      # Three.js 3D globe visualization
+│   ├── ControlPanelDrawer.tsx
+│   ├── LatencyChart.tsx
+│   ├── MetricsDashboard.tsx
+│   ├── MobileTrendsContainer.tsx
+│   ├── TimeRangeSelector.tsx
+│   ├── Tooltip.tsx
+│   └── WorldMap.tsx
 │
 ├── data/
-│   ├── exchangeMeta.ts                   # Static exchange metadata
-│   └── serverPairs.ts                    # Predefined connection pairs
+│   ├── exchangeMeta.ts
+│   └── serverPairs.ts
 │
 ├── hooks/
-│   └── useMobileScrollLock.ts            # Mobile scroll management hook
+│   └── useMobileScrollLock.ts
 │
 ├── pages/
-│   ├── api/                              # Next.js API routes (if any)
-│   ├── _app.tsx                          # Next.js app wrapper
-│   ├── index.tsx                         # Home page with main layout
-│   └── trends.tsx                        # Trends analysis page
+│   ├── api/ (empty or minimal)
+│   ├── _app.tsx
+│   ├── index.tsx
+│   └── trends.tsx
 │
 ├── store/
-│   ├── controlPanelStore.ts              # Zustand store for UI filters
-│   ├── latencyStore.ts                   # Zustand store for latency data
-│   └── useUiInteractionStore.ts          # UI interaction state
+│   ├── controlPanelStore.ts
+│   ├── latencyStore.ts
+│   └── useUiInteractionStore.ts
 │
 ├── styles/
-│   └── global.css                        # Global CSS styles
+│   └── global.css
 │
 └── utils/
-    └── geoUtils.ts                       # Geographic utility functions
+    └── geoUtils.ts
 
 
 
