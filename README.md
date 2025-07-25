@@ -34,63 +34,46 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 ## 📁 Folder Structure
-crypto-exchange-latency-monitor/
-│
-├── Configuration Files
-│   ├── README.md
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── next.config.js
-│   ├── tailwind.config.js
-│   ├── .gitignore
-│   └── .eslintrc.json
-│
-├── public/
-│   ├── textures/
-│   │   └── earth.jpg
-│   ├── file.svg
-│   ├── globe.svg
-│   ├── next.svg
-│   ├── vercel.svg
-│   └── window.svg
-│
-├── components/
-│   ├── ui/
-│   │   ├── dialog.tsx
-│   │   ├── input.tsx
-│   │   └── switch.tsx
-│   │
-│   ├── ControlPanelDrawer.tsx
-│   ├── LatencyChart.tsx
-│   ├── MetricsDashboard.tsx
-│   ├── MobileTrendsContainer.tsx
-│   ├── TimeRangeSelector.tsx
-│   ├── Tooltip.tsx
-│   └── WorldMap.tsx
-│
-├── data/
-│   ├── exchangeMeta.ts
-│   └── serverPairs.ts
-│
-├── hooks/
-│   └── useMobileScrollLock.ts
-│
-├── pages/
-│   ├── api/ (empty or minimal)
-│   ├── _app.tsx
-│   ├── index.tsx
-│   └── trends.tsx
-│
-├── store/
-│   ├── controlPanelStore.ts
-│   ├── latencyStore.ts
-│   └── useUiInteractionStore.ts
-│
-├── styles/
-│   └── global.css
-│
-└── utils/
-    └── geoUtils.ts
+📁 crypto-exchange-latency-monitor/
+  📄 README.md
+  📄 package.json
+  📄 tsconfig.json
+  📄 next.config.js
+  📄 tailwind.config.js
+  
+  📁 public/
+    📁 textures/
+      🖼️ earth.jpg
+    📄 file.svg, globe.svg, next.svg, vercel.svg, window.svg
+  
+  📁 components/
+    📁 ui/
+      📄 dialog.tsx, input.tsx, switch.tsx
+    📄 ControlPanelDrawer.tsx
+    📄 LatencyChart.tsx
+    📄 MetricsDashboard.tsx
+    📄 MobileTrendsContainer.tsx
+    📄 TimeRangeSelector.tsx
+    📄 Tooltip.tsx
+    📄 WorldMap.tsx
+  
+  📁 data/
+    📄 exchangeMeta.ts, serverPairs.ts
+  
+  📁 hooks/
+    📄 useMobileScrollLock.ts
+  
+  📁 pages/
+    📄 _app.tsx, index.tsx, trends.tsx
+  
+  📁 store/
+    📄 controlPanelStore.ts, latencyStore.ts, useUiInteractionStore.ts
+  
+  📁 styles/
+    📄 global.css
+  
+  📁 utils/
+    📄 geoUtils.ts
 
 
 
