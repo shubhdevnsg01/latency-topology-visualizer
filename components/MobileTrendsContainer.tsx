@@ -1,4 +1,4 @@
-// components/MobileTrendsContainer.tsx
+
 "use client";
 
 import { useLatencyStore } from "../store/latencyStore";

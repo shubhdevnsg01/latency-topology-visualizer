@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { useState,useEffect } from 'react';
+import { Analytics } from "@vercel/analytics/next"
 const ControlPanelDrawer = dynamic(
   () => import('../components/ControlPanelDrawer'),
   { ssr: false }
@@ -34,6 +35,7 @@ export default function Home() {
       </div>
 
       <ControlPanelDrawer />
+        <Analytics />
 
       {/* Conditional rendering based on screen size */}
       {isMobile ? (

@@ -1,4 +1,4 @@
-// stores/uiInteractionStore.ts
+
 import { create } from 'zustand';
 
 export const useUiInteractionStore = create((set) => ({

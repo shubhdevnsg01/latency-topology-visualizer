@@ -1,4 +1,4 @@
-// /data/serverPairs.ts
+
 export const SERVER_PAIRS = [
   'Binance-OKX',
   'OKX-Bybit',

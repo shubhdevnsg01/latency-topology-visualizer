@@ -13,7 +13,7 @@ import { TextureLoader } from 'three'
 import { useUiInteractionStore } from '@/store/useUiInteractionStore';
 import { useThree } from '@react-three/fiber';
 import { useMediaQuery } from 'react-responsive';
-// Initial exchange data (latency will be added via state)
+
 const initialExchanges = [
   { name: 'Binance', location: 'Tokyo', lat: 35.6895, lon: 139.6917, cloud: 'AWS' },
   { name: 'OKX', location: 'London', lat: 51.5074, lon: -0.1278, cloud: 'Azure' },
@@ -170,14 +170,14 @@ const ServerMarker = ({ server }: { server: any }) => {
 };
 
 const Earth = () => {
-   const texture = useLoader(TextureLoader, '/textures/earth.jpg') // Just use the relative path
+   const texture = useLoader(TextureLoader, '/textures/earth.jpg') 
 
   return (
     <mesh>
-      <sphereGeometry args={[2, 64, 64]} /> {/* Restore your original radius */}
+      <sphereGeometry args={[2, 64, 64]} /> 
       <meshStandardMaterial
         map={texture}
-        color={new THREE.Color('#3366ff')} // Add blue tint
+        color={new THREE.Color('#3366ff')} 
         toneMapped={false}
       />
     </mesh>

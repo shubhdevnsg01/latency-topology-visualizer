@@ -1,4 +1,3 @@
-// /data/exchangeMeta.ts
 
 export const EXCHANGE_META = {
   Binance: { location: 'Tokyo', cloud: 'AWS' },

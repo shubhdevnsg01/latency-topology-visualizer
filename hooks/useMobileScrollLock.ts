@@ -1,4 +1,4 @@
-// hooks/useMobileScrollLock.ts
+
 import { useEffect, useState } from 'react';
 
 export const useMobileScrollLock = () => {
