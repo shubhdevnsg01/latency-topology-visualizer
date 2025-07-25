@@ -1,4 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Project Overvview
+A real-time cryptocurrency exchange latency monitoring system with an interactive 3D globe visualization and comprehensive analytics dashboard. 
+The application tracks network latency between various crypto exchanges worldwide and presents the data through both geographical and time-series visualizations.
+
+## Architecture and Tech Stack
+•	Next.js - React framework for SSR/SSG
+•	TypeScript - Type safety and better development experience
+•	Three.js + React Three Fiber - 3D globe visualization
+•	Recharts - Time-series charts for latency data
+•	Zustand - Lightweight state management
+•	CSS - Utility-first styling
+
+## Key Libraries
+•	@react-three/fiber - React renderer for Three.js
+•	@react-three/drei - Useful helpers for R3F
+•	recharts - Chart library for data visualization
+
 
 ## Getting Started
 
@@ -16,21 +32,50 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Folder Structure
+📁 crypto-exchange-latency-monitor/
+  📄 README.md
+  📄 package.json
+  📄 tsconfig.json
+  📄 next.config.js
+  📄 tailwind.config.js
+  
+  📁 public/
+    📁 textures/
+      🖼️ earth.jpg
+    📄 file.svg, globe.svg, next.svg, vercel.svg, window.svg
+  
+  📁 components/
+    📁 ui/
+      📄 dialog.tsx, input.tsx, switch.tsx
+    📄 ControlPanelDrawer.tsx
+    📄 LatencyChart.tsx
+    📄 MetricsDashboard.tsx
+    📄 MobileTrendsContainer.tsx
+    📄 TimeRangeSelector.tsx
+    📄 Tooltip.tsx
+    📄 WorldMap.tsx
+  
+  📁 data/
+    📄 exchangeMeta.ts, serverPairs.ts
+  
+  📁 hooks/
+    📄 useMobileScrollLock.ts
+  
+  📁 pages/
+    📄 _app.tsx, index.tsx, trends.tsx
+  
+  📁 store/
+    📄 controlPanelStore.ts, latencyStore.ts, useUiInteractionStore.ts
+  
+  📁 styles/
+    📄 global.css
+  
+  📁 utils/
+    📄 geoUtils.ts
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployed on Vercel
+I have deployed this project.You can check it out here:- https://latency-topology-visualizer-liart.vercel.app/
